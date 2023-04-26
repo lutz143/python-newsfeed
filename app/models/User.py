@@ -1,6 +1,9 @@
 from app.db import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
+import bcrypt
+
+salt = bcrypt.gensalt()
 
 class User(Base):
   __tablename__ = 'users'
@@ -20,4 +23,6 @@ class User(Base):
   def validate_password(self, key, password):
     assert len(password) > 4
 
-    return password
+    # return an encrypted version of the password if the 
+    # assert above doesn't throw an error
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
