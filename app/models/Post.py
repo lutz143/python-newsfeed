@@ -17,3 +17,4 @@ class Post(Base):
     # part of the MySQL table but that the query will return.
 
     user = relationship('User')
+    comments = relationship('Comment', cascade='all,delete')
